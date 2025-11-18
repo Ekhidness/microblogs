@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Регистрация</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% for field in form %}
+        <div style="margin-bottom: 15px;">
+            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.help_text %}
+                <small style="color: #6c757d;">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+                <div style="color: #dc3545;">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+    <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%;">Зарегистрироваться</button>
+</form>
+
+<p style="margin-top: 15px; text-align: center;">
+    Уже есть аккаунт? <a href="{% url 'login' %}">Войдите</a>
+</p>
+{% endblock %}

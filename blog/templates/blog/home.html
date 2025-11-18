@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>Главная страница</h1>
+    
+    {% for post in page_obj %}
+        <div class="post">
+            <h3>{{ post.author.username }}</h3>
+            <p>{{ post.content }}</p>
+            <small>{{ post.created_at }}</small>
+            
+            <div class="post-actions">
+                <a href="{% url 'like_post' post.id %}">
+                    ❤️ {{ post.like_set.count }}
+                </a>
+                
+                <form method="post" action="{% url 'add_comment' post.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    {{ comment_form.content }}
+                    <button type="submit">Комментировать</button>
+                </form>
+            </div>
+            
+            {% for comment in post.comment_set.all %}
+                <div class="comment">
+                    <strong>{{ comment.user.username }}:</strong>
+                    {{ comment.content }}
+                    <small>{{ comment.created_at }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        {% endif %}
+        
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Вперед</a>
+        {% endif %}
+    </div>
+{% endblock %}

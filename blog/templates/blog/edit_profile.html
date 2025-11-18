@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Редактирование профиля</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div style="margin-bottom: 15px;">
+        <label for="id_avatar">Аватар:</label>
+        {{ form.avatar }}
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label for="id_bio">Информация о себе:</label>
+        {{ form.bio }}
+    </div>
+    
+    <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Сохранить изменения</button>
+    <a href="{% url 'profile' %}" style="color: #6c757d; margin-left: 15px;">Отмена</a>
+</form>
+{% endblock %}

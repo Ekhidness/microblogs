@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Удаление профиля</h1>
+
+<div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+    <strong>Внимание!</strong> Это действие нельзя отменить. Все ваши посты и комментарии будут удалены.
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <p>Вы уверены, что хотите удалить свой профиль?</p>
+    <button type="submit" style="background: #dc3545; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Да, удалить профиль</button>
+    <a href="{% url 'profile' %}" style="color: #6c757d; margin-left: 15px;">Отмена</a>
+</form>
+{% endblock %}
