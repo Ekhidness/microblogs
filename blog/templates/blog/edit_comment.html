@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 0 auto;">
+    <h2>✏️ Редактирование комментария</h2>
+    
+    <div class="post" style="margin-bottom: 20px;">
+        <div class="post-header">
+            <span class="post-author">👤 {{ comment.post.author.username }}</span>
+            <span class="post-date">{{ comment.post.created_at|date:"d.m.Y H:i" }}</span>
+        </div>
+        <div class="post-content">
+            {{ comment.post.content|linebreaks }}
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568;">
+                Ваш комментарий:
+            </label>
+            {{ form.content }}
+            {% if form.content.errors %}
+                <div style="color: #e53e3e; margin-top: 5px; font-size: 0.9em;">
+                    {% for error in form.content.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn">💾 Сохранить изменения</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">❌ Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
